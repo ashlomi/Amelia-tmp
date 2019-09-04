@@ -1,0 +1,22 @@
+}
+	"Parameters":[
+		{
+			"Name": "WebBankingAppVersion",
+			"Value": "5.1"
+		},
+		{	
+			"Name": "MobileBankingAppVersion",
+			"Value": "5.1"
+		},
+		{
+			"Name": "ReleaseVersion",
+			"Value": "5.1"
+		}
+		],
+}
+ "reference": {
+
+    "fileName": "GardenPipeline.json",
+	"fileSource": "GardenPipelineReference"
+  }
+}
