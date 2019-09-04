@@ -1,226 +1,230 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!--
-  ~ The MIT License
-  ~
-  ~ Copyright (c) 2016, CloudBees, Inc.
-  ~
-  ~ Permission is hereby granted, free of charge, to any person obtaining a copy
-  ~ of this software and associated documentation files (the "Software"), to deal
-  ~ in the Software without restriction, including without limitation the rights
-  ~ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-  ~ copies of the Software, and to permit persons to whom the Software is
-  ~ furnished to do so, subject to the following conditions:
-  ~
-  ~ The above copyright notice and this permission notice shall be included in
-  ~ all copies or substantial portions of the Software.
-  ~
-  ~ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-  ~ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-  ~ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-  ~ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-  ~ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-  ~ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-  ~ THE SOFTWARE.
-  -->
-
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <parent>
-        <groupId>org.jenkins-ci.plugins</groupId>
-        <artifactId>plugin</artifactId>
-        <version>3.48</version>
-        <relativePath />
-    </parent>
-    <artifactId>pipeline-utility-steps</artifactId>
-    <packaging>hpi</packaging>
-    <version>${revision}${changelist}</version>
-    <name>Pipeline Utility Steps</name>
-    <url>https://wiki.jenkins.io/display/JENKINS/Pipeline+Utility+Steps+Plugin</url>
 
-    <licenses>
-        <license>
-            <name>MIT License</name>
-            <url>http://opensource.org/licenses/MIT</url>
-        </license>
-    </licenses>
+    <groupId>net.java</groupId>
+    <artifactId>cargo-tracker</artifactId>
+    <version>1.0</version>
+    <packaging>war</packaging>
 
-    <developers>
-        <developer>
-            <id>rsandell</id>
-            <name>Robert Sandell</name>
-            <email>rsandell@cloudbees.com</email>
-            <roles>
-                <role>maintainer</role>
-            </roles>
-        </developer>
-    </developers>
+    <name>cargo-tracker</name>
+    <url>https://github.com/javaee/cargotracker/</url>
 
     <properties>
-        <revision>2.3.1</revision>
-        <changelist>-SNAPSHOT</changelist>
-        <jenkins.version>2.121.2</jenkins.version>
-        <java.level>8</java.level>
-        <workflow-step-api.version>2.19</workflow-step-api.version>
+        <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <netbeans.hint.j2eeVersion>1.7</netbeans.hint.j2eeVersion>
+        <netbeans.hint.deploy.server>gfv3ee6</netbeans.hint.deploy.server>
+        <webapp.databaseTempDir>/tmp</webapp.databaseTempDir>
+        <webapp.graphTraversalUrl>http://localhost:8080/cargo-tracker/rest/graph-traversal/shortest-path</webapp.graphTraversalUrl>
     </properties>
 
-    <dependencies>
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-configuration2</artifactId>
-            <version>2.2</version>
-        </dependency>
-        <dependency>
-            <groupId>org.jenkins-ci.plugins</groupId>
-            <artifactId>structs</artifactId>
-            <version>1.17</version>
-        </dependency>
-        <dependency>
-            <groupId>org.jenkins-ci.plugins</groupId>
-            <artifactId>script-security</artifactId>
-            <version>1.46</version>
-        </dependency>
-        <dependency>
-            <groupId>org.jenkins-ci.plugins.workflow</groupId>
-            <artifactId>workflow-step-api</artifactId>
-            <version>${workflow-step-api.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.maven</groupId>
-            <artifactId>maven-model</artifactId>
-            <version>3.5.4</version>
-        </dependency>
-        <dependency>
-            <!-- Require upper bound dependencies error -->
-            <groupId>org.jenkins-ci.plugins.workflow</groupId>
-            <artifactId>workflow-api</artifactId>
-            <version>2.31</version>
-        </dependency>
-        <dependency>
-            <!-- Require upper bound dependencies error -->
-            <groupId>org.jenkins-ci.plugins</groupId>
-            <artifactId>scm-api</artifactId>
-            <version>2.2.6</version>
-        </dependency>
-        <dependency>
-            <groupId>org.jenkins-ci.plugins.workflow</groupId>
-            <artifactId>workflow-cps</artifactId>
-            <version>2.58</version> <!-- JENKINS-50752 fix is required for writeMavenPom() -->
-            <optional>true</optional>
-        </dependency>
-        <dependency>
-            <groupId>org.jenkins-ci.plugins.workflow</groupId>
-            <artifactId>workflow-job</artifactId>
-            <version>2.26</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.jenkins-ci.plugins.workflow</groupId>
-            <artifactId>workflow-basic-steps</artifactId>
-            <version>2.6</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.jenkins-ci.plugins.workflow</groupId>
-            <artifactId>workflow-durable-task-step</artifactId>
-            <version>2.22</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.jenkins-ci.plugins</groupId>
-            <artifactId>durable-task</artifactId>
-            <version>1.27</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.jenkins-ci.plugins.workflow</groupId>
-            <artifactId>workflow-step-api</artifactId>
-            <classifier>tests</classifier>
-            <version>${workflow-step-api.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.jenkins-ci.plugins.workflow</groupId>
-            <artifactId>workflow-support</artifactId>
-            <version>3.2</version>
-            <classifier>tests</classifier>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-csv</artifactId>
-            <version>1.5</version>
-        </dependency>
-    </dependencies>
+    <!-- We need to use the PrimeFaces repository -->
+    <repositories>
+        <repository>
+            <id>primefaces</id>
+            <url>http://repository.primefaces.org</url>
+        </repository>
+    </repositories>
+
     <dependencyManagement>
+        <!-- Arquillian BOM used to reduce collision between testing dependecies. -->
         <dependencies>
             <dependency>
-                <groupId>org.apache.commons</groupId>
-                <artifactId>commons-lang3</artifactId>
-                <version>3.7</version>
+                <groupId>org.jboss.arquillian</groupId>
+                <artifactId>arquillian-bom</artifactId>
+                <version>1.1.10.Final</version>
+                <scope>import</scope>
+                <type>pom</type>
             </dependency>
         </dependencies>
     </dependencyManagement>
 
+    <dependencies>
+        <!-- Java EE API -->
+        <dependency>
+            <groupId>javax</groupId>
+            <artifactId>javaee-api</artifactId>
+            <version>7.0</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- GlassFish specific dependencies, could go away in Java EE 8 -->
+        <dependency>
+            <groupId>org.glassfish.jersey.containers</groupId>
+            <artifactId>jersey-container-servlet-core</artifactId>
+            <version>2.0</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.glassfish.jersey.media</groupId>
+            <artifactId>jersey-media-moxy</artifactId>
+            <version>2.0</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- The third-party dependencies this application has -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.4</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <!-- PrimeFaces dependencies -->
+        <dependency>
+            <groupId>org.primefaces</groupId>
+            <artifactId>primefaces</artifactId>
+            <version>5.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.primefaces.themes</groupId>
+            <artifactId>ui-lightness</artifactId>
+            <version>1.0.10</version>
+        </dependency>
+
+        <!-- Test dependendencies -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.arquillian.junit</groupId>
+            <artifactId>arquillian-junit-container</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <!-- Resolvers are needed in the Arquillian tests -->
+        <dependency>
+            <groupId>org.jboss.shrinkwrap.resolver</groupId>
+            <artifactId>shrinkwrap-resolver-impl-maven</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
     <build>
         <plugins>
             <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>findbugs-maven-plugin</artifactId>
-                <version>3.0.5</version>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.3</version>
                 <configuration>
-                    <!-- The excludeFilterFile profile in plugin-pom doesn't seem to take effect. So redundant configuration to fix.-->
-                    <excludeFilterFile>src/findbugs/excludesFilter.xml</excludeFilterFile>
-                    <failOnError>${findbugs.failOnError}</failOnError>
-                    <xmlOutput>true</xmlOutput>
-                    <findbugsXmlOutput>false</findbugsXmlOutput>
-                    <effort>${findbugs.effort}</effort>
-                    <threshold>${findbugs.threshold}</threshold>
+                    <source>1.7</source>
+                    <target>1.7</target>
+                    <compilerArguments>
+                        <endorseddirs>${endorsed.dir}</endorseddirs>
+                    </compilerArguments>
                 </configuration>
-                <executions>
-                    <execution>
-                        <id>findbugs</id>
-                        <goals>
-                            <goal>check</goal>
-                        </goals>
-                        <phase>verify</phase>
-                    </execution>
-                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>2.6</version>
+                <configuration>
+                    <failOnMissingWebXml>false</failOnMissingWebXml>
+                    <filteringDeploymentDescriptors>true</filteringDeploymentDescriptors>
+                </configuration>
+            </plugin>
+            <plugin>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.18.1</version>
+                <configuration>
+                    <skipTests>true</skipTests>
+                    <systemPropertyVariables>
+                        <!-- This is needed to tell the unit tests which profile
+                        we are running. -->
+                        <profileId>${project.activeProfiles[0].id}</profileId>
+                    </systemPropertyVariables>
+                </configuration>
             </plugin>
         </plugins>
     </build>
 
-    <scm>
-        <connection>scm:git:git://github.com/jenkinsci/pipeline-utility-steps-plugin.git</connection>
-        <developerConnection>scm:git:git@github.com:jenkinsci/pipeline-utility-steps-plugin.git</developerConnection>
-        <url>https://github.com/jenkinsci/pipeline-utility-steps-plugin</url>
-        <tag>${scmTag}</tag>
-    </scm>
-
-    <repositories>
-        <repository>
-            <id>repo.jenkins-ci.org</id>
-            <url>https://repo.jenkins-ci.org/public/</url>
-        </repository>
-    </repositories>
-
-    <pluginRepositories>
-        <pluginRepository>
-            <id>repo.jenkins-ci.org</id>
-            <url>https://repo.jenkins-ci.org/public/</url>
-        </pluginRepository>
-    </pluginRepositories>
-
     <profiles>
-      <profile>
-        <id>jdk11</id>
-        <properties>
-          <!-- TODO: https://issues.jenkins-ci.org/browse/JENKINS-53788 (JDK11 issue on CI) -->
-          <doclint>none</doclint>
-          <maven.javadoc.skip>true</maven.javadoc.skip>
-        </properties>
-        <activation>
-          <jdk>11</jdk>
-        </activation>
-      </profile>
+        <!-- GlassFish specific version of build -->
+        <profile>
+            <id>glassfish</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <dependencies>
+                <dependency>
+                    <groupId>org.jboss.arquillian.container</groupId>
+                    <artifactId>arquillian-glassfish-remote-3.1</artifactId>
+                    <version>1.0.0.CR4</version>
+                    <scope>test</scope>
+                </dependency>
+            </dependencies>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.cargo</groupId>
+                        <artifactId>cargo-maven2-plugin</artifactId>
+                        <version>1.4.14</version>
+                        <configuration>
+                            <container>
+                                <containerId>glassfish4x</containerId>
+                                <zipUrlInstaller>
+                                    <url>http://download.java.net/glassfish/4.1/release/glassfish-4.1.zip</url>
+                                </zipUrlInstaller>
+                            </container>
+                            <properties>
+                                <context>cargo-tracker</context>
+                            </properties>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <!-- WebLogic Profile -->
+        <profile>
+            <id>weblogic</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <properties>
+                <webapp.graphTraversalUrl>http://localhost:7001/cargo-tracker/rest/graph-traversal/shortest-path</webapp.graphTraversalUrl>
+            </properties>
+            <dependencies>
+                <dependency>
+                    <groupId>org.jboss.arquillian.container</groupId>
+                    <artifactId>arquillian-wls-remote-12.1.2</artifactId>
+                    <version>1.0.0.Alpha3</version>
+                    <scope>test</scope>
+                </dependency>
+            </dependencies>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-war-plugin</artifactId>
+                        <version>2.6</version>
+                        <configuration>
+                            <failOnMissingWebXml>false</failOnMissingWebXml>
+                            <filteringDeploymentDescriptors>true</filteringDeploymentDescriptors>
+                            <webXml>${basedir}/src/weblogic/webapp/WEB-INF/web.xml</webXml>
+                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <version>2.18.1</version>
+                        <configuration>
+                            <skipTests>true</skipTests>
+                            <systemPropertyVariables>
+                                <!-- This is needed to tell the unit tests which profile
+                                we are running. -->
+                                <profileId>${project.activeProfiles[0].id}</profileId>
+                                <!-- This is needed to tell Arquillian which profile
+                                we are running. -->
+                                <arquillian.launch>${project.activeProfiles[0].id}</arquillian.launch>
+                            </systemPropertyVariables>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
     </profiles>
 </project>
